@@ -1,0 +1,61 @@
+@startuml
+
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "name_basics" as nb {
+  *nconst : text
+  --
+  primaryName : text
+  birthYear : int
+  deathYear : int
+  primaryProfession : text
+  knownForTitles : text
+}
+
+entity "title_basics" as tb {
+  *tconst : text
+  --
+  titleType : text
+  primaryTitle : text
+  originalTitle : text
+  isAdult : boolean
+  startYear : int
+  endYear : int
+  runtimeMinutes : int
+  genres : text
+}
+
+entity "title_ratings" as tr {
+  *tconst : text <<FK>>
+  --
+  averageRating : double
+  numVotes : int
+}
+
+entity "title_crew" as tc {
+  *tconst : text <<FK>>
+  --
+  directors : text
+  writers : text
+}
+
+entity "title_principals" as tp {
+  *tconst : text <<FK>>
+  *nconst : text <<FK>>
+  --
+  ordering : int
+  category : text
+  job : text
+  characters : text
+}
+
+tb --o| tr
+tb --o| tc
+tb --|{ tp
+nb --|{ tp
+
+@enduml
